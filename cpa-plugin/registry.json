@@ -5,7 +5,7 @@
       "id": "grok2api-egress",
       "name": "Grok Egress Guard",
       "description": "Adds CPA-native Grok egress node management, sticky account binding, passive and active quality checks, quarantine migration, and a management dashboard.",
-      "author": "lij768423-svg",
+      "author": "Hkxtor",
       "version": "1.1.3",
       "repository": "https://github.com/Hkxtor/grok2api-egress-enhancements",
       "homepage": "https://github.com/Hkxtor/grok2api-egress-enhancements/tree/main/cpa-plugin",
