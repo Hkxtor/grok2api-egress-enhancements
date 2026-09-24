@@ -218,7 +218,7 @@ https://raw.githubusercontent.com/router-for-me/CLIProxyAPI-Plugins-Store/main/r
 ```yaml
 plugins:
   store-sources:
-    - "https://raw.githubusercontent.com/lij768423-svg/grok2api-egress-enhancements/main/cpa-plugin/registry.json"
+    - "https://raw.githubusercontent.com/Hkxtor/grok2api-egress-enhancements/main/cpa-plugin/registry.json"
 ```
 
 重启 CPA 后，在插件商店搜索：
@@ -254,7 +254,7 @@ plugins:
 - 查看 CPA 日志中的 `pluginhost: failed to load plugin grok2api-egress` / `plugin … register failed`
 - 确认 `.so` 与 CPA 同架构、同 libc（官方 CPA 镜像为 Debian/glibc；Alpine/musl 需自行编译）
 
-也可直接从仓库 [Release](https://github.com/lij768423-svg/grok2api-egress-enhancements/releases) 下载 zip，校验 `checksums.txt` 后按下面的手动方式安装。
+也可直接从仓库 [Release](https://github.com/Hkxtor/grok2api-egress-enhancements/releases) 下载 zip，校验 `checksums.txt` 后按下面的手动方式安装。
 
 ### 手动安装
 
