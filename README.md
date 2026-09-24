@@ -115,7 +115,7 @@ AI 用 fork（或本仓）[`scripts/from_residential.py`](./scripts/from_residen
 
 ### CPA 原生出口守护插件
 
-`cpa-plugin/` 现为 **v1.1.1 纯 CPA 原生插件**（功能同 1.0.9；v1.1.1 为管理密钥解析与自动刷新加固，v1.1.0 文档主更 grok2api 0015–0020），不依赖、不连接 Grok2API 运行时。它通过 CPA Host API 读取认证文件和 Usage 事件，把账号的 `proxy_url` 粘性绑定到出口节点，并提供节点 CRUD、逐行批量导入、批量操作、连通性/真实质量检测、可配置探针方案（吞吐基线 / 预期标记 / 自定义 Prompt）、隔离迁号、策略热加载、统计事件和深浅色管理 UI。v1.0.9 起主动探测可按方案校验最后一行或正则标记；v1.0.8 起商店安装后注册不再同步扫认证文件，避免多账号时一直「未生效」；v1.0.7 起 CPA 调度跳过隔离/冷却出口，账号或额度错误只记为 ignored，迁移会写后读回校验，并支持节点白名单化的内部换 IP Webhook。构建与部署方法见 [cpa-plugin/README.md](./cpa-plugin/README.md)，代理规划、账号容量、隔离恢复和强制住宅 IP 轮换见 [AI 部署与运维指南](./cpa-plugin/AI_USAGE_GUIDE.md)。
+`cpa-plugin/` 现为 **v1.1.2 纯 CPA 原生插件**（功能同 1.1.1；v1.1.2 仅把插件元数据的仓库链接指向本仓库，v1.1.1 为管理密钥解析与自动刷新加固，v1.1.0 文档主更 grok2api 0015–0020），不依赖、不连接 Grok2API 运行时。它通过 CPA Host API 读取认证文件和 Usage 事件，把账号的 `proxy_url` 粘性绑定到出口节点，并提供节点 CRUD、逐行批量导入、批量操作、连通性/真实质量检测、可配置探针方案（吞吐基线 / 预期标记 / 自定义 Prompt）、隔离迁号、策略热加载、统计事件和深浅色管理 UI。v1.0.9 起主动探测可按方案校验最后一行或正则标记；v1.0.8 起商店安装后注册不再同步扫认证文件，避免多账号时一直「未生效」；v1.0.7 起 CPA 调度跳过隔离/冷却出口，账号或额度错误只记为 ignored，迁移会写后读回校验，并支持节点白名单化的内部换 IP Webhook。构建与部署方法见 [cpa-plugin/README.md](./cpa-plugin/README.md)，代理规划、账号容量、隔离恢复和强制住宅 IP 轮换见 [AI 部署与运维指南](./cpa-plugin/AI_USAGE_GUIDE.md)。
 
 推荐的完整链路（家宽 → Mihomo 每 session 一个 listener → **Grok2API 节点** → Quality Guard）见[推荐出口部署方式](./docs/RECOMMENDED_DEPLOYMENT.md)。给 AI 的落地顺序见 [docs/AI_GROK2API_INSTALL.md](./docs/AI_GROK2API_INSTALL.md)。
 
