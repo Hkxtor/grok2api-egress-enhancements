@@ -139,6 +139,25 @@
 
 UI 经 management 代理，请求头需 `X-Grok2API-Egress-UI: 1`（页面已内置）。
 
+### 管理密钥与临时封禁（重要）
+
+插件页与管理中心同源，页面只复用管理中心自己保存的管理密钥（`localStorage['cli-proxy-auth']`，按官方 `enc::v1::` 混淆格式解析）。管理中心没勾“记住密码”时就没有可复用的密钥，此时页面**不会发出任何管理请求**。
+
+CPA 对**任意管理路由**（包括插件自己的 `/v0/management/...`）在鉴权层按客户端 IP 计数失败：连续 5 次失败即临时封禁该 IP 约 30 分钟，**封禁期间密钥正确也会被拒**，且 `127.0.0.1` 同样会被封。本机部署时浏览器与管理台共用同一个 IP，所以密钥过期后如果还在后台定时轮询，会把管理台一起锁死（管理台报 `IP banned due to too many failed attempts. Try again in …`）。该行为是 CPA 有意的安全策略（见上游 issue #4013），插件侧只能保证不去制造失败次数。
+
+插件页当前的行为：
+
+- 密钥解析只读官方 `cli-proxy-auth`（兼容单/双次 JSON 包裹）；历史版本猜测过的 `authToken` 已移除，读到 JSON 片段 / 换行 / 超长值一律视为“没有可用密钥”，**不发送请求**
+- 启动只发一条 `/quality-guard` 做鉴权校验，通过后才加载快照；`/nodes` 串行跟随，鉴权失败时不会产生第二条请求
+- 识别到 `invalid management key` / `missing management key` / `IP banned …` 立即**停止自动刷新**并给出提示；5xx 与网络错误只做 30s / 60s / 120s 退避，不当作密钥问题
+- **刷新显示**按钮是显式重试入口：修好密钥后点一次即可恢复轮询（停止后不会再有后台请求）
+
+现场恢复步骤：
+
+1. 先关掉仍在轮询的插件页（否则解封后会立刻被再次封禁）
+2. 重启 CPA 可**立即**清除封禁（封禁记录只在进程内存中），或等倒计时结束
+3. 回管理中心重新登录并勾选“记住密码”；若用的是 `cliproxy run --password` 的本地密码，注意它不一定每次启动都相同
+
 ---
 
 ## 目录结构
@@ -151,8 +170,11 @@ cpa-plugin/
 │   ├── auth_bind.go     # list/get/save auth、rebalance、migrate
 │   ├── guard.go         # TPS、probe、quarantine、background worker
 │   ├── page.html        # 管理 UI（go:embed）
+│   ├── ui_auth.js       # 管理密钥解析 / 失败分类 / 轮询策略（go:embed，纯函数）
 │   ├── tokens.css       # 设计 token
 │   ├── main_test.go
+│   ├── ui_auth_test.go  # UI 契约 + Node 行为测试入口
+│   ├── ui_auth_harness.mjs  # ui_auth.js 的 Node 行为测试
 │   ├── go.mod
 │   └── grok2api-egress.so   # 构建产物（勿提交可执行二进制到 git；可 CI 产出）
 ├── loadtest/

@@ -89,6 +89,9 @@ const (
 //go:embed page.html
 var pageTemplate string
 
+//go:embed ui_auth.js
+var uiAuthJS string
+
 //go:embed tokens.css
 var tokenCSS string
 
@@ -782,6 +785,7 @@ func renderPageHTML() string {
 	out := pageTemplate
 	out = strings.Replace(out, "/*__HALLMARK_TOKENS__*/", tokenCSS, 1)
 	out = strings.Replace(out, "/*__ACCOUNTS_PANEL_CSS__*/", accountsPanelCSS, 1)
+	out = strings.Replace(out, "/*__EGRESS_UI_AUTH_JS__*/", uiAuthJS, 1)
 	out = strings.Replace(out, "/*__ACCOUNTS_PANEL_JS__*/", accountsPanelJS, 1)
 	return out
 }
