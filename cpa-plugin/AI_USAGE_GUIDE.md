@@ -623,7 +623,7 @@ auth 到代理的映射仍有短缓存，后台隔离复测最多受 worker 扫�
 ## 12. 给 AI 工具的推荐任务提示词
 
 ```text
-你正在部署 grok2api-egress-enhancements/cpa-plugin v1.1.2。
+你正在部署 grok2api-egress-enhancements/cpa-plugin v1.1.3。
 
 先阅读：
 1. cpa-plugin/README.md
